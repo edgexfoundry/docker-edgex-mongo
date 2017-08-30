@@ -20,6 +20,9 @@ MAINTAINER Jim White <james_white2@dell.com>
 
 #copy initialization script for later initialization
 COPY *.js /edgex/mongo/config/
+COPY launch-edgex-mongo.sh /edgex/mongo/config/
 
 #expose Mongodb's port
 EXPOSE 27017
+
+CMD /edgex/mongo/config/launch-edgex-mongo.sh
