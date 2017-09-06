@@ -19,7 +19,8 @@ set -e
 
 mongod --smallfiles &
 
-sleep 10
+echo "Waiting for $SLEEP_TIME_BEFORE_CONFIG seconds before configuring mongo"
+sleep $SLEEP_TIME_BEFORE_CONFIG
 
 mongo /edgex/mongo/config/init_mongo.js
 
