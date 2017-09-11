@@ -1,5 +1,6 @@
-###############################################################################
-# Copyright 2016-2017 Dell Inc.
+#!/bin/sh
+
+# Copyright 2017 Cavium Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-###############################################################################
-# Mongo DB image for EdgeX Foundry
-FROM mongo:latest
-MAINTAINER Jim White <james_white2@dell.com>
 
-ENV SLEEP_TIME_BEFORE_CONFIG=10
+set -e
 
-#copy initialization script for later initialization
-COPY *.js /edgex/mongo/config/
-COPY launch-edgex-mongo.sh /edgex/mongo/config/
+mongod --smallfiles &
 
-#expose Mongodb's port
-EXPOSE 27017
+echo "Waiting for $SLEEP_TIME_BEFORE_CONFIG seconds before configuring mongo"
+sleep $SLEEP_TIME_BEFORE_CONFIG
 
-CMD /edgex/mongo/config/launch-edgex-mongo.sh
+mongo /edgex/mongo/config/init_mongo.js
+
+wait
+
