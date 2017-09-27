@@ -32,7 +32,8 @@ RUN \
     adduser --system --ingroup mongodb mongodb && \
     wget http://fastdl.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-3.4.7.tgz && \
     tar xf mongodb-linux-arm64-ubuntu1604-3.4.7.tgz && \
-    mv mongodb-linux-aarch64-ubuntu1604-3.4.7/bin/* /usr/local/bin && \
+    mv mongodb-linux-aarch64-ubuntu1604-3.4.7/bin/mongod /usr/local/bin && \
+    mv mongodb-linux-aarch64-ubuntu1604-3.4.7/bin/mongo /usr/local/bin && \
     rm -rf mongo mongodb-linux-arm64-ubuntu1604-3.4.7.tgz mongodb-linux-aarch64-ubuntu1604-3.4.7 && \
 	mkdir /data && mkdir /data/db && \
 	chown mongodb:mongodb /data/db
