@@ -15,7 +15,7 @@
 #
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
-FROM mongo:latest
+FROM mongo:3.4.9
 MAINTAINER Jim White <james_white2@dell.com>
 
 ENV SLEEP_TIME_BEFORE_CONFIG=10
