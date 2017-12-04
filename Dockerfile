@@ -18,8 +18,6 @@
 FROM mongo:latest
 MAINTAINER Jim White <james_white2@dell.com>
 
-ENV SLEEP_TIME_BEFORE_CONFIG=10
-
 #copy initialization script for later initialization
 COPY *.js /edgex/mongo/config/
 COPY launch-edgex-mongo.sh /edgex/mongo/config/

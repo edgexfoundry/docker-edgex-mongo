@@ -18,8 +18,6 @@
 FROM arm64v8/ubuntu:zesty
 MAINTAINER Federico Claramonte <fede.claramonte@caviumnetworks.com>
 
-ENV SLEEP_TIME_BEFORE_CONFIG=10
-
 RUN \
 	#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
 	#echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d \
