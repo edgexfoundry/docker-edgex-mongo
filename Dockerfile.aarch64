@@ -15,7 +15,7 @@
 #
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
-FROM arm64v8/ubuntu:zesty
+FROM arm64v8/ubuntu:xenial
 MAINTAINER Federico Claramonte <fede.claramonte@caviumnetworks.com>
 
 RUN \
