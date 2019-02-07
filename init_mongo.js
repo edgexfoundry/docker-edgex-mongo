@@ -1,5 +1,5 @@
 //###############################################################################
-//# Copyright 2016-2017 Dell Inc.
+//# Copyright 2016-2019 Dell Inc.
 //#
 //# Licensed under the Apache License, Version 2.0 (the "License");
 //# you may not use this file except in compliance with the License.
@@ -104,6 +104,18 @@ db.createCollection("transmission");
 db.createCollection("subscription");
 db.notification.createIndex({slug: 1}, {unique: true});
 db.subscription.createIndex({slug: 1}, {unique: true});
+
+db=db.getSiblingDB('scheduler')
+db.createUser({ user: "scheduler",
+  pwd: "password",
+  roles: [
+    { role: "readWrite", db: "scheduler" }
+  ]
+});
+db.createCollection("interval");
+db.createCollection("intervalAction");
+db.interval.createIndex({slug: 1}, {unique: true});
+db.intervalAction.createIndex({slug: 1}, {unique: true});
 
 db=db.getSiblingDB('logging')
 db.createUser({ user: "logging",
