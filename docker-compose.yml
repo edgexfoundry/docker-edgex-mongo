@@ -1,0 +1,19 @@
+################################
+# A yml file to pass environment variables to mongodb.
+# Notice init.sh will be built into customerized mongodb.
+################################
+version: "3"
+
+services:
+  db:      
+      image: my-mongo      
+      environment:
+        - 'SECRET_SERVICE_HOST=edgex-vault'
+        - 'MONGO_INITDB_DATABASE=admin'
+        #MONGO_INITDB_ROOT_USERNAME: admin
+        #MONGO_INITDB_ROOT_PASSWORD: password               
+      #volumes:
+        #- ./init_mongo.sh:/docker-entrypoint-initd.d/init_mongo.sh      
+      ports:
+        - "27017:27017"
+      

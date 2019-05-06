@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright 2016-2017 Dell Inc.
+# Copyright 2016-2019 Dell Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,17 @@
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
 FROM mongo:3.4.9
-MAINTAINER Jim White <james_white2@dell.com>
+
+MAINTAINER Tingyu Zeng <tingyu.zeng@dell.com>
+
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+RUN apt-get update && apt-get install -y curl && apt-get install -y sudo
+#RUN apt-get update && apt-get install -y curl && apt-get install jq
+
 
 #copy initialization script for later initialization
-COPY *.js /edgex/mongo/config/
-COPY launch-edgex-mongo.sh /edgex/mongo/config/
-
+ADD resp-init.json /tmp/
+ADD cred.json /tmp/
+ADD init.sh /docker-entrypoint-initdb.d/
 #expose Mongodb's port
 EXPOSE 27017
-
-CMD /edgex/mongo/config/launch-edgex-mongo.sh
