@@ -17,16 +17,14 @@
 # Mongo DB image for EdgeX Foundry
 FROM mongo:3.4.9
 
-MAINTAINER Tingyu Zeng <tingyu.zeng@dell.com>
-
 RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 RUN apt-get update && apt-get install -y curl && apt-get install -y sudo
 #RUN apt-get update && apt-get install -y curl && apt-get install jq
 
 
 #copy initialization script for later initialization
-ADD resp-init.json /tmp/
-ADD cred.json /tmp/
+#ADD resp-init.json /tmp/
+#ADD cred.json /tmp/
 ADD init.sh /docker-entrypoint-initdb.d/
 #expose Mongodb's port
 EXPOSE 27017

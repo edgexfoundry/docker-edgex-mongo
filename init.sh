@@ -1,11 +1,12 @@
 #!/bin/sh
+echo "starting mongo init script ..."
 # read root key file of vault from volume share and parse key
 JSON=$(cat </vault/config/assets/resp-init.json)
 #TODO: switch to root so that resp-init.json can be read
 #JSON=$(cat </tmp/resp-init.json)
 RKEY=$(echo $JSON | sed 's/.*"\(.*\)"[^"]*$/\1/')
 
-echo $RKEY
+#echo $RKEY
 # reach vault to get the credential
 # curl edgex-vault:8200/v1/secret/mongodb/my-secret
 # $SECRET_SERVICE_HOST needs to be defined in the dockercompose file
@@ -28,21 +29,6 @@ LOGGING=$(echo $CREDS | jq -r ".data .logging")
 LOGGINGPASSWD=$(echo $CREDS | jq -r ".data .loggingpasswd")
 SCHEDULER=$(echo $CREDS | jq -r ".data .scheduler")
 SCHEDULERPASSWD=$(echo $CREDS | jq -r ".data .schedulerpasswd")
-
-#ADMIN="admin"
-#ADMINPASSWD="pass"
-#METADATA="metadata"
-#METADATAPASSWD="pass"
-#COREDATA="coredata"
-#COREDATAPASSWD="pass"
-#RULESENGINE="rules_engine"
-#RULESENGINEPASSWD="pass"
-#NOTIFICATIONS="notifications"
-#NOTIFICATIONSPASSWD="pass"
-#LOGGING="logging"
-#LOGGINGPASSWD="pass"
-#SCHEDULER="scheduler"
-#SCHEDULERPASSWD="pass"
 
 authDatabase='admin'
 
