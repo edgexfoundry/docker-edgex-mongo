@@ -15,7 +15,7 @@
 #
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
-FROM mongo:3.4.9
+FROM mongo:4.0-xenial
 MAINTAINER Jim White <james_white2@dell.com>
 
 #copy initialization script for later initialization
