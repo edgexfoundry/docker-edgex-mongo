@@ -19,22 +19,16 @@ FROM arm64v8/ubuntu:xenial
 MAINTAINER Federico Claramonte <fede.claramonte@caviumnetworks.com>
 
 RUN \
-	#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
-	#echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d \
-	#| tee /etc/apt/sources.list.d/mongodb-org-3.0.list && \
-	# apt-get update && \
-	# apt-get install -y mongodb && \
-	# apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-	apt-get update && apt-get install -y --no-install-recommends wget && rm -rf /var/lib/apt/lists/* && \
+    apt-get update && apt-get install -y --no-install-recommends wget libcurl3 php-curl && rm -rf /var/lib/apt/lists/* && \
     addgroup mongodb && \
     adduser --system --ingroup mongodb mongodb && \
-    wget http://fastdl.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-3.4.7.tgz && \
-    tar xf mongodb-linux-arm64-ubuntu1604-3.4.7.tgz && \
-    mv mongodb-linux-aarch64-ubuntu1604-3.4.7/bin/mongod /usr/local/bin && \
-    mv mongodb-linux-aarch64-ubuntu1604-3.4.7/bin/mongo /usr/local/bin && \
-    rm -rf mongo mongodb-linux-arm64-ubuntu1604-3.4.7.tgz mongodb-linux-aarch64-ubuntu1604-3.4.7 && \
-	mkdir /data && mkdir /data/db && \
-	chown mongodb:mongodb /data/db
+    wget http://fastdl.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
+    tar xf mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
+    mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongod /usr/local/bin && \
+    mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongo /usr/local/bin && \
+    rm -rf mongo mongodb-linux-arm64-ubuntu1604-4.0.10.tgz mongodb-linux-aarch64-ubuntu1604-4.0.10 && \
+    mkdir /data && mkdir /data/db && \
+    chown mongodb:mongodb /data/db
 
 USER mongodb
 
@@ -46,4 +40,3 @@ COPY launch-edgex-mongo.sh /edgex/mongo/config/
 EXPOSE 27017
 
 CMD /edgex/mongo/config/launch-edgex-mongo.sh
-
