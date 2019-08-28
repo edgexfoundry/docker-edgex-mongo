@@ -14,9 +14,19 @@
 # limitations under the License.
 #
 ###############################################################################
+
+# Build Go bootstrap application
+FROM golang:1.12-alpine3.9 AS builder
+RUN apk update && apk add build-base git
+WORKDIR /edgex-mongo
+COPY go.mod .
+RUN go mod download
+COPY . .
+RUN make build
+
 # Mongo DB image for EdgeX Foundry
 FROM arm64v8/ubuntu:xenial
-MAINTAINER Federico Claramonte <fede.claramonte@caviumnetworks.com>
+MAINTAINER Diana Atanasova
 
 RUN \
     apt-get update && apt-get install -y --no-install-recommends wget libcurl3 php-curl && rm -rf /var/lib/apt/lists/* && \
@@ -31,12 +41,13 @@ RUN \
     chown mongodb:mongodb /data/db
 
 USER mongodb
-
-#copy initialization script for later initialization
-COPY *.js /edgex/mongo/config/
-COPY launch-edgex-mongo.sh /edgex/mongo/config/
-
 #expose Mongodb's port
 EXPOSE 27017
+WORKDIR /edgex-mongo
+COPY --from=builder /edgex-mongo/cmd/edgex-mongo/edgex-mongo /edgex-mongo
+COPY --from=builder /edgex-mongo/cmd/edgex-mongo/res/configuration.toml /edgex-mongo/res/configuration.toml
+COPY --from=builder /edgex-mongo/cmd/edgex-mongo/res/security/configuration.toml /edgex-mongo/res/security/configuration.toml
+COPY --from=builder /edgex-mongo/bin/edgex-mongo-launch.sh /edgex-mongo
 
-CMD /edgex/mongo/config/launch-edgex-mongo.sh
+
+ENTRYPOINT ["/edgex-mongo/edgex-mongo-launch.sh"]

@@ -1,0 +1,33 @@
+/*******************************************************************************
+ * Copyright 2019 VMWare Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ *******************************************************************************/
+package unsecure
+
+import (
+	"flag"
+	"fmt"
+
+	"github.com/BurntSushi/toml"
+
+	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
+)
+
+func LoadConfig() (*pkg.Configuration, error) {
+	configFileLocation := flag.String("config", pkg.UnsecureConfigPath, "configuration file")
+	flag.Parse()
+	pkg.LoggingClient.Info(fmt.Sprintf("loading the configuration from: %s", *configFileLocation))
+	config := pkg.Configuration{}
+	_, err := toml.DecodeFile(*configFileLocation, &config)
+	return &config, err
+}

@@ -1,0 +1,31 @@
+The following open source projects are referenced by docker-edgex-go:
+
+BurntSushi/toml (MIT) https://github.com/BurntSushi/toml
+https://github.com/BurntSushi/toml/blob/master/COPYING
+
+edgexfoundry/go-mod-core-contracts (Apache 2.0) https://github.com/edgexfoundry/go-mod-core-contracts
+https://github.com/edgexfoundry/go-mod-core-contracts/blob/master/LICENSE
+
+globalsign/mgo (unspecified) - https://github.com/globalsign/mgo
+https://github.com/globalsign/mgo/blob/master/LICENSE
+
+kr/pretty (MIT) https://github.com/kr/pretty
+https://github.com/kr/pretty/blob/main/License
+
+gopkg.in/check (BSD) https://github.com/go-check/check/
+https://github.com/go-check/check/blob/v1/LICENSE
+
+google/uuid (BSD-3) https://github.com/google/uuid
+https://github.com/google/uuid/blob/master/LICENSE
+
+go-logfmt/logfmt (MIT) https://github.com/go-logfmt/logfmt
+https://github.com/go-logfmt/logfmt/blob/master/LICENSE
+
+github.com/ugorji/go (MIT) https://github.com/ugorji/go
+https://github.com/ugorji/go/blob/master/LICENSE
+
+github.com/go-kit/kit (MIT) https://github.com/go-kit/kit
+https://github.com/go-kit/kit/blob/master/LICENSE
+
+github.com/kr/logfmt https://github.com/kr/logfmt
+https://github.com/kr/logfmt/blob/master/Readme
