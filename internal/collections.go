@@ -20,7 +20,7 @@ import (
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
 )
 
-func creatAdminCollections(db *mgo.Database) {
+func cleanupUsers(db *mgo.Database) {
 	_, err := db.C("system.users").RemoveAll(nil)
 	if err != nil {
 		pkg.LoggingClient.Error("Error during execution: " + err.Error())
@@ -142,7 +142,7 @@ func createLoggingCollections(db *mgo.Database) {
 	}
 }
 
-func createExpertClientCollections(db *mgo.Database) {
+func createExportClientCollections(db *mgo.Database) {
 	logEntry := mgo.Collection{
 		Database: db,
 		Name:     "exportConfiguration",

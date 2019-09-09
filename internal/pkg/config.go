@@ -30,11 +30,6 @@ type ServiceInfo struct {
 	// BootTimeout indicates, in milliseconds, how long the service will retry connecting to mongo database
 	// before giving up. Default is 30,000.
 	BootTimeout int
-	//RetryCount specifies how much times the service to retry connecting to the mongo database before giving up.
-	//The Default is 5
-	RetryCount int
-	// StartupMsg specifies a string to log once the database initialization is completed.
-	StartupMsg string
 }
 
 type MongoInfo struct {

@@ -19,8 +19,6 @@
 
 [Service]
     BootTimeout = 30000
-    StartupMsg = "Database successfully initialized"
-    RetryCount = 5
 
 [Mongo]
     Host = 'localhost'

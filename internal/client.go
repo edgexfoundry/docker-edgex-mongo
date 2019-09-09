@@ -9,16 +9,14 @@ import (
 )
 
 var databaseCollectionsMap = map[string]func(db *mgo.Database){
-	//TODO Diana: Do I need empty database ?!
 	"authorization":   nil,
-	"admin":           creatAdminCollections,
 	"metadata":        createMetadataCollections,
 	"coredata":        createCoredataCollections,
 	"rules_engine_db": nil,
 	"notifications":   createNotificationCollections,
 	"scheduler":       createSchedulerCollections,
 	"logging":         createLoggingCollections,
-	"exportclient":    createExpertClientCollections,
+	"exportclient":    createExportClientCollections,
 }
 
 type DBInitClient struct {
@@ -34,6 +32,9 @@ func (client *DBInitClient) PopulateDatabase() (err error) {
 
 	defer session.Close()
 
+	//User clearance should be done first, so further created users will be present.
+	client.createDatabase(session, "admin", cleanupUsers)
+
 	for dbName, createCollectionsFunc := range databaseCollectionsMap {
 		client.createDatabase(session, dbName, createCollectionsFunc)
 	}
@@ -41,7 +42,7 @@ func (client *DBInitClient) PopulateDatabase() (err error) {
 }
 
 func (client *DBInitClient) createDatabase(session *mgo.Session, dbName string, createCollectionsFunc func(db *mgo.Database)) {
-	pkg.LoggingClient.Debug(fmt.Sprintf("Settting up %v database", dbName))
+	pkg.LoggingClient.Info(fmt.Sprintf("Settting up %v database", dbName))
 	db := mgo.Database{
 		Session: session,
 		Name:    dbName,
