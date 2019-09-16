@@ -17,9 +17,6 @@ mongod --smallfiles --bind_ip_all &
 # Run Edgex-Mongo Go Application and keep the process/container alive
 ###
 cd cmd/
-while true; do
-  ./edgex-mongo && break
-  sleep 10
-done
+./edgex-mongo
 wait
 
