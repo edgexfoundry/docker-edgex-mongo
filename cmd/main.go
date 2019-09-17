@@ -34,8 +34,10 @@ func main() {
 	var err error
 	var config *pkg.Configuration
 
+	//TODO When Vault Integration is added the check: if env == "" should be removed! It is temporary added for sake of Snap builds.
+	//The default behaviour in case secretStore is not present is to read the credentials from Vault
 	switch env := os.Getenv(pkg.SecretStore); {
-	case env == "false":
+	case env == "false" || env == "":
 		config, err = unsecure.LoadConfig()
 	default:
 		config, err = secure.LoadConfig()
