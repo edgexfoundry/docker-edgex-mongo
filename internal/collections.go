@@ -153,3 +153,31 @@ func createExportClientCollections(db *mgo.Database) {
 		pkg.LoggingClient.Error("Error during execution: " + err.Error())
 	}
 }
+
+func createApplicationServiceCollections(db *mgo.Database) {
+	logEntry := mgo.Collection{
+		Database: db,
+		Name:     "store",
+		FullName: "db.application-service",
+	}
+	err := logEntry.Create(&mgo.CollectionInfo{})
+	if err != nil {
+		pkg.LoggingClient.Error("Error during execution: " + err.Error())
+	}
+
+	err = db.C("store").EnsureIndex(mgo.Index{Key: []string{"uuid"}, Name: "uuid_1", Unique: true})
+	if err != nil {
+		pkg.LoggingClient.Error("Error during execution: " + err.Error())
+	}
+
+	err = db.C("store").EnsureIndex(mgo.Index{Key: []string{"appServiceKey"}, Name: "appServiceKey_1", Unique: false})
+	if err != nil {
+		pkg.LoggingClient.Error("Error during execution: " + err.Error())
+	}
+
+	err = db.C("store").EnsureIndex(mgo.Index{Key: []string{"appServiceKey", "uuid"}, Name: "appServiceKey_uuid_1", Unique: true})
+	if err != nil {
+		pkg.LoggingClient.Error("Error during execution: " + err.Error())
+	}
+
+}

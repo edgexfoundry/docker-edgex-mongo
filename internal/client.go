@@ -9,14 +9,15 @@ import (
 )
 
 var databaseCollectionsMap = map[string]func(db *mgo.Database){
-	"authorization":   nil,
-	"metadata":        createMetadataCollections,
-	"coredata":        createCoredataCollections,
-	"rules_engine_db": nil,
-	"notifications":   createNotificationCollections,
-	"scheduler":       createSchedulerCollections,
-	"logging":         createLoggingCollections,
-	"exportclient":    createExportClientCollections,
+	"authorization":       nil,
+	"metadata":            createMetadataCollections,
+	"coredata":            createCoredataCollections,
+	"rules_engine_db":     nil,
+	"notifications":       createNotificationCollections,
+	"scheduler":           createSchedulerCollections,
+	"logging":             createLoggingCollections,
+	"exportclient":        createExportClientCollections,
+	"application-service": createApplicationServiceCollections,
 }
 
 type DBInitClient struct {
