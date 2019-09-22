@@ -36,7 +36,7 @@ func (client *DBInitClient) PopulateDatabase() (err error) {
 	//User clearance should be done first, so further created users will be present.
 	client.createDatabase(session, "admin", cleanupUsers)
 
-	for dbName, createCollectionsFunc := range databaseCollectionsMap {
+	for dbName, createCollectionsFunc := range DatabaseCollectionsMap {
 		client.createDatabase(session, dbName, createCollectionsFunc)
 	}
 	return
