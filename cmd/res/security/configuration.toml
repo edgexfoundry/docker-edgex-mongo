@@ -22,13 +22,12 @@
   BootTimeout = 30000
 
 [SecretStore]
-  Server = "localhost"
+  Server = "edgex-vault"
   Port = 8200
-  HealthCheckPath = "v1/sys/health"
-  DBStem = "v1/secret/database"
-  TokenPath = "res/resp-init.json"
-  CACertPath = "res/EdgeXFoundryCA/EdgeXFoundryCA.pem"
-  SNIS = ["edgex-vault"]
+  DBStem = "/v1/secret/edgex/dbcredentials"
+  CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
+  TokenPath = "/vault/config/assets/resp-init.json"
+  ServerName = "edgex-vault"
 
 [Mongo]
   Host = 'localhost'

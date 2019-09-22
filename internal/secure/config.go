@@ -15,17 +15,25 @@
 package secure
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 
 	"github.com/BurntSushi/toml"
 
+	"github.com/edgexfoundry/docker-edgex-mongo/internal"
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
+	secrets "github.com/edgexfoundry/go-mod-secrets/pkg/providers/vault"
 )
 
 type secureConfiguration struct {
 	pkg.Configuration
-	pkg.SecretStoreInfo
+	SecretStore pkg.SecretStoreInfo
+}
+
+type auth struct {
+	Token string `json:"root_token"`
 }
 
 func LoadConfig() (*pkg.Configuration, error) {
@@ -38,11 +46,59 @@ func LoadConfig() (*pkg.Configuration, error) {
 		return nil, err
 	}
 
-	//TODO 1 Connect to Vault
-	//TODO 2 Read the credentials
-	//TODO 3 If ok ->
-	//TODO 4 Update the Configuration.Credentials with what is read from Vault
-	//TODO 5 Return the Configuration struct. From that point we should not care if we are working in secure or none-secure envieroment
+	token, err := getAccessToken(secureConfig.SecretStore.TokenPath)
+	if err != nil {
+		return nil, err
+	}
 
+	var credentials = make(map[string]pkg.CredentialsInfo)
+	for _, dbName := range getDatabaseNames() {
+		searchPath := fmt.Sprintf("%s/%s", secureConfig.SecretStore.DBStem, dbName)
+		pkg.LoggingClient.Debug(fmt.Sprintf("reading secrets from '%s' path", searchPath))
+		secretClient, err := secrets.NewSecretClient(secrets.SecretConfig{
+			Port:           secureConfig.SecretStore.Port,
+			Host:           secureConfig.SecretStore.Server,
+			Path:           searchPath,
+			Protocol:       "https",
+			RootCaCert:     secureConfig.SecretStore.CACertPath,
+			ServerName:     secureConfig.SecretStore.ServerName,
+			Authentication: secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
+		})
+
+		if err != nil {
+			pkg.LoggingClient.Error(fmt.Sprintf("fail to connecto secret store: %v", err.Error()))
+			return nil, err
+		}
+		secrets, err := secretClient.GetSecrets("username", "password")
+		if err != nil {
+			pkg.LoggingClient.Error(fmt.Sprintf("failed to read secret stores data for '%s' path: %s", searchPath, err.Error()))
+			return nil, err
+		}
+		crInfo := pkg.CredentialsInfo{Username: secrets["username"], Password: secrets["password"]}
+		credentials[dbName] = crInfo
+	}
+	secureConfig.UpdateCredentials(credentials)
+	pkg.LoggingClient.Debug("Credentials successfully read from Secret Store")
 	return &secureConfig.Configuration, err
+}
+
+func getDatabaseNames() []string {
+	databases := make([]string, len(internal.DatabaseCollectionsMap))
+	i := 0
+	for db := range internal.DatabaseCollectionsMap {
+		databases[i] = db
+		i++
+	}
+	return databases
+}
+
+func getAccessToken(filename string) (string, error) {
+	a := auth{}
+	raw, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return a.Token, err
+	}
+
+	err = json.Unmarshal(raw, &a)
+	return a.Token, err
 }

@@ -26,6 +26,10 @@ type Configuration struct {
 	Credentials map[string]CredentialsInfo
 }
 
+func (c *Configuration) UpdateCredentials(credentials map[string]CredentialsInfo) {
+	c.Credentials = credentials
+}
+
 type ServiceInfo struct {
 	// BootTimeout indicates, in milliseconds, how long the service will retry connecting to mongo database
 	// before giving up. Default is 30,000.
@@ -54,7 +58,7 @@ type SecretStoreInfo struct {
 	TokenPath  string
 	CACertPath string
 	DBStem     string
-	SNIS       []string
+	ServerName string
 }
 
 func (s SecretStoreInfo) GetSecretStoreBaseURL() string {
