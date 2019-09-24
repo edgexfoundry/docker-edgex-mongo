@@ -53,3 +53,6 @@
     [Credentials.exportclient]
        Username = "exportclient"
        Password = "password"
+    [Credentials.application-service]
+       Username = "application-service"
+       Password = "password"
