@@ -11,7 +11,7 @@ set -e
 ###
 # Run MongoDB
 ###
-mongod --smallfiles --bind_ip_all &
+mongod --bind_ip_all &
 
 ###
 # Run Edgex-Mongo Go Application and keep the process/container alive
