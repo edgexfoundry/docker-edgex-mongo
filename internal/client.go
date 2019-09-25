@@ -8,7 +8,7 @@ import (
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
 )
 
-var databaseCollectionsMap = map[string]func(db *mgo.Database){
+var DatabaseCollectionsMap = map[string]func(db *mgo.Database){
 	"authorization":       nil,
 	"metadata":            createMetadataCollections,
 	"coredata":            createCoredataCollections,
