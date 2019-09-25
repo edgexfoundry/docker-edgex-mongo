@@ -14,16 +14,27 @@
 #################################################################################
 
 # This is a TOML config file for edgex-mongo init service.
+# If the application works in secure enabled environment, [SecretStore] section is meaningful, meanwhile [Credentials] section is ignored
+# and vice versa
+
 [Writable]
-    LogLevel = "INFO"
+  LogLevel = "INFO"
 
 [Service]
-    BootTimeout = 30000
+  BootTimeout = 30000
+
+[SecretStore]
+  Server = "localhost"
+  Port = 8200
+  DBStem = "/v1/secret/edgex/dbcredentials"
+  CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
+  TokenPath = "/vault/config/assets/resp-init.json"
+  ServerName = "edgex-vault"
 
 [Mongo]
-    Host = 'localhost'
-    Port = 27017
-    Timeout = 5000
+  Host = 'localhost'
+  Port = 27017
+  Timeout = 5000
 
 [Credentials]
     [Credentials.authorization]

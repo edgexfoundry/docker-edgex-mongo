@@ -44,11 +44,11 @@ ENV EDGEX_SECURITY_SECRET_STORE=$EDGEX_SECURITY_SECRET_STORE_DEFAULT
 EXPOSE 27017
 WORKDIR /edgex-mongo
 COPY --from=builder /edgex-mongo/cmd/edgex-mongo /edgex-mongo/cmd/
-COPY --from=builder /edgex-mongo/cmd/res/configuration.toml /edgex-mongo/cmd/res/configuration.toml
-COPY --from=builder /edgex-mongo/cmd/res/security/configuration.toml /edgex-mongo/cmd/res/security/configuration.toml
+COPY --from=builder /edgex-mongo/cmd/res/docker/configuration.toml /edgex-mongo/cmd/res/docker/configuration.toml
 COPY --from=builder /edgex-mongo/bin/edgex-mongo-launch.sh /edgex-mongo/bin/
 
 ENTRYPOINT ["/edgex-mongo/bin/edgex-mongo-launch.sh"]
+
 
 
 

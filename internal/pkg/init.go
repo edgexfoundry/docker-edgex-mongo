@@ -15,8 +15,10 @@
 package pkg
 
 import (
+	"flag"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/globalsign/mgo"
@@ -25,6 +27,26 @@ import (
 )
 
 var LoggingClient logger.LoggingClient
+
+func DefineConfigFileLocation() string {
+	var configDir string
+	var profile string
+	flag.StringVar(&profile, "profile", "", "Specify a profile other than default.")
+	flag.StringVar(&profile, "p", "", "Specify a profile other than default.")
+	flag.StringVar(&configDir, "configDir", "", "configuration file")
+	flag.Parse()
+	directory := ConfigDir
+	if len(configDir) > 0 {
+		directory = configDir
+	}
+
+	configFile := directory + "/" + ConfigFileName
+	if len(profile) > 0 {
+		configFile = strings.Join([]string{directory, profile, ConfigFileName}, "/")
+	}
+	LoggingClient.Info(fmt.Sprintf("config file location: %s", configFile))
+	return configFile
+}
 
 func GetSession(config *Configuration) (*mgo.Session, error) {
 	connectionString := config.Mongo.Host + ":" + strconv.Itoa(config.Mongo.Port)

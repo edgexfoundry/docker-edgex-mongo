@@ -15,19 +15,14 @@
 package unsecure
 
 import (
-	"flag"
-	"fmt"
-
 	"github.com/BurntSushi/toml"
 
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
 )
 
 func LoadConfig() (*pkg.Configuration, error) {
-	configFileLocation := flag.String("config", pkg.UnsecureConfigPath, "configuration file")
-	flag.Parse()
-	pkg.LoggingClient.Info(fmt.Sprintf("loading the configuration from: %s", *configFileLocation))
+	configFileLocation := pkg.DefineConfigFileLocation()
 	config := pkg.Configuration{}
-	_, err := toml.DecodeFile(*configFileLocation, &config)
+	_, err := toml.DecodeFile(configFileLocation, &config)
 	return &config, err
 }

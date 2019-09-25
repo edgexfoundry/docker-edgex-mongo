@@ -14,6 +14,8 @@
 #################################################################################
 
 # This is a TOML config file for edgex-mongo init service.
+# If the application works in secure enabled environment, [SecretStore] section is meaningful, meanwhile [Credentials] section is ignored
+# and vice versa
 
 [Writable]
   LogLevel = "INFO"
@@ -30,7 +32,39 @@
   ServerName = "edgex-vault"
 
 [Mongo]
-  Host = 'localhost'
+  Host = '0.0.0.0'
   Port = 27017
   Timeout = 5000
+
+[Credentials]
+    [Credentials.authorization]
+       Username = "admin"
+       Password = "password"
+    [Credentials.admin]
+       Username = "admin"
+       Password = "password"
+    [Credentials.metadata]
+       Username = "meta"
+       Password = "password"
+    [Credentials.coredata]
+       Username = "core"
+       Password = "password"
+    [Credentials.rules_engine_db]
+       Username = "rules_engine_user"
+       Password = "password"
+    [Credentials.notifications]
+       Username = "notifications"
+       Password = "password"
+    [Credentials.scheduler]
+       Username = "scheduler"
+       Password = "password"
+    [Credentials.logging]
+       Username = "logging"
+       Password = "password"
+    [Credentials.exportclient]
+       Username = "exportclient"
+       Password = "password"
+    [Credentials.application-service]
+       Username = "application-service"
+       Password = "password"
 
