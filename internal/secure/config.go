@@ -16,7 +16,6 @@ package secure
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 
@@ -37,11 +36,9 @@ type auth struct {
 }
 
 func LoadConfig() (*pkg.Configuration, error) {
-	configFileLocation := flag.String("config", pkg.SecureConfigPath, "configuration file")
-	flag.Parse()
-	pkg.LoggingClient.Info(fmt.Sprintf("loading the configuration from: %s", *configFileLocation))
+	configFileLocation := pkg.DefineConfigFileLocation()
 	secureConfig := secureConfiguration{}
-	_, err := toml.DecodeFile(*configFileLocation, &secureConfig)
+	_, err := toml.DecodeFile(configFileLocation, &secureConfig)
 	if err != nil {
 		return nil, err
 	}

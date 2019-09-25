@@ -54,7 +54,7 @@ func main() {
 
 func exitIfError(err error) {
 	if err != nil {
-		pkg.LoggingClient.Error(fmt.Sprintf("%s failed because of %s", pkg.EdgexMongoServiceKey, err.Error()))
+		pkg.LoggingClient.Error(fmt.Sprintf("%s failed because of: %s", pkg.EdgexMongoServiceKey, err.Error()))
 		os.Exit(1)
 	}
 }
