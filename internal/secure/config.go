@@ -58,7 +58,7 @@ func LoadConfig() (*pkg.Configuration, error) {
 			Path:           searchPath,
 			Protocol:       "https",
 			RootCaCert:     secureConfig.SecretStore.CACertPath,
-			ServerName:     secureConfig.SecretStore.ServerName,
+			ServerName:     secureConfig.SecretStore.SNI,
 			Authentication: secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
 		})
 

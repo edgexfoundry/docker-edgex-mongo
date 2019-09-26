@@ -14,8 +14,8 @@
 #################################################################################
 
 # This is a TOML config file for edgex-mongo init service.
-# If the application works in secure enabled environment, [SecretStore] section is meaningful, meanwhile [Credentials] section is ignored
-# and vice versa
+# If the application works in secure enabled environment, the credentials are read from the SecretStore and
+# the hard-coded credentials are ignored and vice versa
 
 [Writable]
   LogLevel = "INFO"
@@ -29,7 +29,7 @@
   DBStem = "/v1/secret/edgex/dbcredentials"
   CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
   TokenPath = "/vault/config/assets/resp-init.json"
-  ServerName = "edgex-vault"
+  SNI = "localhost"
 
 [Mongo]
   Host = 'localhost'

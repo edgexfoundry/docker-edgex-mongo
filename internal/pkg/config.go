@@ -58,7 +58,8 @@ type SecretStoreInfo struct {
 	TokenPath  string
 	CACertPath string
 	DBStem     string
-	ServerName string
+	// SNI - Server Name Identifier
+	SNI string
 }
 
 func (s SecretStoreInfo) GetSecretStoreBaseURL() string {
