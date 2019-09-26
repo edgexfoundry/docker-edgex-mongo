@@ -25,22 +25,13 @@ COPY . .
 RUN make build
 
 # Mongo DB image for EdgeX Foundry
-FROM arm64v8/ubuntu:xenial
+FROM arm64v8/mongo:4.2.0-bionic
+
 MAINTAINER Diana Atanasova
 
-RUN \
-    apt-get update && apt-get install -y --no-install-recommends wget libcurl3 php-curl && rm -rf /var/lib/apt/lists/* && \
-    addgroup mongodb && \
-    adduser --system --ingroup mongodb mongodb && \
-    wget http://fastdl.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
-    tar xf mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
-    mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongod /usr/local/bin && \
-    mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongo /usr/local/bin && \
-    rm -rf mongo mongodb-linux-arm64-ubuntu1604-4.0.10.tgz mongodb-linux-aarch64-ubuntu1604-4.0.10 && \
-    mkdir /data && mkdir /data/db && \
-    chown mongodb:mongodb /data/db
+RUN apt update && apt-get install dumb-init \
+ && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
-USER mongodb
 #expose Mongodb's port
 EXPOSE 27017
 WORKDIR /edgex-mongo
@@ -49,4 +40,4 @@ COPY --from=builder /edgex-mongo/cmd/res/configuration.toml /edgex-mongo/cmd/res
 COPY --from=builder /edgex-mongo/cmd/res/security/configuration.toml /edgex-mongo/cmd/res/security/configuration.toml
 COPY --from=builder /edgex-mongo/bin/edgex-mongo-launch.sh /edgex-mongo/bin/
 
-ENTRYPOINT ["/edgex-mongo/bin/edgex-mongo-launch.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "/edgex-mongo/bin/edgex-mongo-launch.sh"]
