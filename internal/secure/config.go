@@ -36,6 +36,7 @@ type auth struct {
 }
 
 func LoadConfig() (*pkg.Configuration, error) {
+	pkg.LoggingClient.Info("loading configuration considering the secret store")
 	configFileLocation := pkg.DefineConfigFileLocation()
 	secureConfig := secureConfiguration{}
 	_, err := toml.DecodeFile(configFileLocation, &secureConfig)

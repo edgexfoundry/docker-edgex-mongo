@@ -18,6 +18,6 @@ package pkg
 //TODO should be defined in go-mod-core-contracts/clients/constants.go
 const EdgexMongoServiceKey = "edgex-mongo"
 const SecretStore string = "EDGEX_SECURITY_SECRET_STORE"
-const ConfigDir = "res"
+const Confdir = "res"
 const ConfigFileName = "configuration.toml"
 const VaultToken = "X-Vault-Token"
