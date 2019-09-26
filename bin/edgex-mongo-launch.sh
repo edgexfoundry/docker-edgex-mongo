@@ -17,6 +17,6 @@ mongod --bind_ip_all &
 # Run Edgex-Mongo Go Application and keep the process/container alive
 ###
 cd cmd/
-./edgex-mongo --profile=docker --configDir=res
+./edgex-mongo --profile=docker --confdir=res
 wait
 

@@ -21,6 +21,7 @@ import (
 )
 
 func LoadConfig() (*pkg.Configuration, error) {
+	pkg.LoggingClient.Info("loading the configuration ignoring the secret store")
 	configFileLocation := pkg.DefineConfigFileLocation()
 	config := pkg.Configuration{}
 	_, err := toml.DecodeFile(configFileLocation, &config)

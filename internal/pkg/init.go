@@ -29,15 +29,15 @@ import (
 var LoggingClient logger.LoggingClient
 
 func DefineConfigFileLocation() string {
-	var configDir string
+	var confdir string
 	var profile string
 	flag.StringVar(&profile, "profile", "", "Specify a profile other than default.")
 	flag.StringVar(&profile, "p", "", "Specify a profile other than default.")
-	flag.StringVar(&configDir, "configDir", "", "configuration file")
+	flag.StringVar(&confdir, "confdir", "", "configuration file")
 	flag.Parse()
-	directory := ConfigDir
-	if len(configDir) > 0 {
-		directory = configDir
+	directory := Confdir
+	if len(confdir) > 0 {
+		directory = confdir
 	}
 
 	configFile := directory + "/" + ConfigFileName
