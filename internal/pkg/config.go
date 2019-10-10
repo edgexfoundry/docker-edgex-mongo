@@ -57,7 +57,7 @@ type SecretStoreInfo struct {
 	Port       int
 	TokenPath  string
 	CACertPath string
-	DBStem     string
+	Path       string
 	// SNI - Server Name Identifier
 	SNI string
 }
