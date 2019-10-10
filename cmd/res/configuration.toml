@@ -26,7 +26,7 @@
 [SecretStore]
   Server = "localhost"
   Port = 8200
-  DBStem = "/v1/secret/edgex/dbcredentials"
+  Path = "/v1/secret/edgex/mongo"
   CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
   TokenPath = "/vault/config/assets/resp-init.json"
   SNI = "localhost"

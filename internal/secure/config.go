@@ -49,27 +49,27 @@ func LoadConfig() (*pkg.Configuration, error) {
 		return nil, err
 	}
 
+	secretClient, err := secrets.NewSecretClient(secrets.SecretConfig{
+		Port:           secureConfig.SecretStore.Port,
+		Host:           secureConfig.SecretStore.Server,
+		Path:           secureConfig.SecretStore.Path,
+		Protocol:       "https",
+		RootCaCertPath: secureConfig.SecretStore.CACertPath,
+		ServerName:     secureConfig.SecretStore.SNI,
+		Authentication: secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
+	})
+
+	if err != nil {
+		pkg.LoggingClient.Error(fmt.Sprintf("fail to connecto secret store: %v", err.Error()))
+		return nil, err
+	}
+
 	var credentials = make(map[string]pkg.CredentialsInfo)
 	for _, dbName := range getDatabaseNames() {
-		searchPath := fmt.Sprintf("%s/%s", secureConfig.SecretStore.DBStem, dbName)
-		pkg.LoggingClient.Debug(fmt.Sprintf("reading secrets from '%s' path", searchPath))
-		secretClient, err := secrets.NewSecretClient(secrets.SecretConfig{
-			Port:           secureConfig.SecretStore.Port,
-			Host:           secureConfig.SecretStore.Server,
-			Path:           searchPath,
-			Protocol:       "https",
-			RootCaCert:     secureConfig.SecretStore.CACertPath,
-			ServerName:     secureConfig.SecretStore.SNI,
-			Authentication: secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
-		})
-
+		pkg.LoggingClient.Debug(fmt.Sprintf("reading secrets from '%s/%s' path", secureConfig.SecretStore.Path, dbName))
+		secrets, err := secretClient.GetSecrets("/"+dbName,"username", "password")
 		if err != nil {
-			pkg.LoggingClient.Error(fmt.Sprintf("fail to connecto secret store: %v", err.Error()))
-			return nil, err
-		}
-		secrets, err := secretClient.GetSecrets("username", "password")
-		if err != nil {
-			pkg.LoggingClient.Error(fmt.Sprintf("failed to read secret stores data for '%s' path: %s", searchPath, err.Error()))
+			pkg.LoggingClient.Error(fmt.Sprintf("failed to read secret stores data for '%s/%s' path: %s", secureConfig.SecretStore.Path, dbName, err.Error()))
 			return nil, err
 		}
 		crInfo := pkg.CredentialsInfo{Username: secrets["username"], Password: secrets["password"]}
