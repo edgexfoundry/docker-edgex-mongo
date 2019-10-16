@@ -20,14 +20,14 @@ import (
 )
 
 type Configuration struct {
-	Service     ServiceInfo
-	Writable    WritableInfo
-	Mongo       MongoInfo
-	Credentials map[string]CredentialsInfo
+	Service   ServiceInfo
+	Writable  WritableInfo
+	Mongo     MongoInfo
+	Databases map[string]DatabaseInfo
 }
 
-func (c *Configuration) UpdateCredentials(credentials map[string]CredentialsInfo) {
-	c.Credentials = credentials
+func (c *Configuration) UpdateCredentials(databases map[string]DatabaseInfo) {
+	c.Databases = databases
 }
 
 type ServiceInfo struct {
@@ -42,7 +42,7 @@ type MongoInfo struct {
 	Timeout int
 }
 
-type CredentialsInfo struct {
+type DatabaseInfo struct {
 	Username string
 	Password string
 }
