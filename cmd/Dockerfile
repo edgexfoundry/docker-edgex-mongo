@@ -37,10 +37,6 @@ FROM mongo:4.2.0-bionic
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2019: VMWare'
 
-#the default value will be changed to True, once the go-mod-secret is in use
-ARG EDGEX_SECURITY_SECRET_STORE_DEFAULT=false
-ENV EDGEX_SECURITY_SECRET_STORE=$EDGEX_SECURITY_SECRET_STORE_DEFAULT
-
 EXPOSE 27017
 WORKDIR /edgex-mongo
 COPY --from=builder /edgex-mongo/cmd/edgex-mongo /edgex-mongo/cmd/
