@@ -21,7 +21,6 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"github.com/edgexfoundry/docker-edgex-mongo/internal"
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
 	secrets "github.com/edgexfoundry/go-mod-secrets/pkg/providers/vault"
 )
@@ -64,15 +63,15 @@ func LoadConfig() (*pkg.Configuration, error) {
 		return nil, err
 	}
 
-	var credentials = make(map[string]pkg.CredentialsInfo)
-	for _, dbName := range getDatabaseNames() {
+	var credentials = make(map[string]pkg.DatabaseInfo)
+	for _, dbName := range getDatabaseNames(secureConfig) {
 		pkg.LoggingClient.Debug(fmt.Sprintf("reading secrets from '%s/%s' path", secureConfig.SecretStore.Path, dbName))
 		secrets, err := secretClient.GetSecrets("/"+dbName,"username", "password")
 		if err != nil {
 			pkg.LoggingClient.Error(fmt.Sprintf("failed to read secret stores data for '%s/%s' path: %s", secureConfig.SecretStore.Path, dbName, err.Error()))
 			return nil, err
 		}
-		crInfo := pkg.CredentialsInfo{Username: secrets["username"], Password: secrets["password"]}
+		crInfo := pkg.DatabaseInfo{Username: secrets["username"], Password: secrets["password"]}
 		credentials[dbName] = crInfo
 	}
 	secureConfig.UpdateCredentials(credentials)
@@ -80,11 +79,11 @@ func LoadConfig() (*pkg.Configuration, error) {
 	return &secureConfig.Configuration, err
 }
 
-func getDatabaseNames() []string {
-	databases := make([]string, len(internal.DatabaseCollectionsMap))
+func getDatabaseNames(secureConfig secureConfiguration) []string {
+	databases := make([]string, len(secureConfig.Databases))
 	i := 0
-	for db := range internal.DatabaseCollectionsMap {
-		databases[i] = db
+	for dbName := range secureConfig.Databases {
+		databases[i] = dbName
 		i++
 	}
 	return databases

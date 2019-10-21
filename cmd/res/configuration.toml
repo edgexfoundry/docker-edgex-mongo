@@ -36,34 +36,34 @@
   Port = 27017
   Timeout = 5000
 
-[Credentials]
-    [Credentials.authorization]
+[Databases]
+    [Databases.authorization]
        Username = "admin"
        Password = "password"
-    [Credentials.admin]
+    [Databases.admin]
        Username = "admin"
        Password = "password"
-    [Credentials.metadata]
+    [Databases.metadata]
        Username = "meta"
        Password = "password"
-    [Credentials.coredata]
+    [Databases.coredata]
        Username = "core"
        Password = "password"
-    [Credentials.rules_engine_db]
-       Username = "rules_engine_user"
+    [Databases.rulesengine]
+       Username = "rulesengine"
        Password = "password"
-    [Credentials.notifications]
+    [Databases.notifications]
        Username = "notifications"
        Password = "password"
-    [Credentials.scheduler]
+    [Databases.scheduler]
        Username = "scheduler"
        Password = "password"
-    [Credentials.logging]
+    [Databases.logging]
        Username = "logging"
        Password = "password"
-    [Credentials.exportclient]
+    [Databases.exportclient]
        Username = "exportclient"
        Password = "password"
-    [Credentials.application-service]
-       Username = "application-service"
+    [Databases.application-service]
+       Username = "appservice"
        Password = "password"

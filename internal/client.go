@@ -12,7 +12,7 @@ var DatabaseCollectionsMap = map[string]func(db *mgo.Database){
 	"authorization":       nil,
 	"metadata":            createMetadataCollections,
 	"coredata":            createCoredataCollections,
-	"rules_engine_db":     nil,
+	"rulesengine":     nil,
 	"notifications":       createNotificationCollections,
 	"scheduler":           createSchedulerCollections,
 	"logging":             createLoggingCollections,
@@ -50,8 +50,8 @@ func (client *DBInitClient) createDatabase(session *mgo.Session, dbName string, 
 	}
 
 	err := db.UpsertUser(&mgo.User{
-		Username: client.Configuration.Credentials[dbName].Username,
-		Password: client.Configuration.Credentials[dbName].Password,
+		Username: client.Configuration.Databases[dbName].Username,
+		Password: client.Configuration.Databases[dbName].Password,
 		Roles: []mgo.Role{
 			mgo.RoleReadWrite,
 		},
