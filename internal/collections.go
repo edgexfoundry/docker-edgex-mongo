@@ -85,6 +85,11 @@ func createCoredataCollections(db *mgo.Database) {
 		pkg.LoggingClient.Error("Error during execution: " + err.Error())
 	}
 
+	err = db.C("reading").EnsureIndex(mgo.Index{Key: []string{"uuid"}, Name: "uuid_1", Unique: true})
+	if err != nil {
+		pkg.LoggingClient.Error("Error during execution: " + err.Error())
+	}
+
 	err = db.C("reading").EnsureIndex(mgo.Index{Key: []string{"device"}, Name: "device_1", Unique: false})
 	if err != nil {
 		pkg.LoggingClient.Error("Error during execution: " + err.Error())
