@@ -59,7 +59,9 @@ type SecretStoreInfo struct {
 	CACertPath string
 	Path       string
 	// SNI - Server Name Identifier
-	SNI string
+	SNI                     string
+	AdditionalRetryAttempts int
+	RetryWaitPeriod         string
 }
 
 func (s SecretStoreInfo) GetSecretStoreBaseURL() string {

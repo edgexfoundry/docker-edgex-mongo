@@ -44,6 +44,11 @@ func LoadConfig() (*pkg.Configuration, error) {
 		return nil, err
 	}
 
+	retryWaitPeriodTime, err := time.ParseDuration(secureConfig.SecretStore.RetryWaitPeriod)
+	if err != nil {
+		return nil, err
+	}
+
 	token, err := getAccessToken(secureConfig.SecretStore.TokenPath)
 	if err != nil {
 		return nil, err
@@ -57,8 +62,8 @@ func LoadConfig() (*pkg.Configuration, error) {
 		RootCaCertPath:          secureConfig.SecretStore.CACertPath,
 		ServerName:              secureConfig.SecretStore.SNI,
 		Authentication:          secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
-		AdditionalRetryAttempts: 10,
-		RetryWaitPeriod:         time.Second,
+		AdditionalRetryAttempts: secureConfig.SecretStore.AdditionalRetryAttempts,
+		RetryWaitPeriod:         retryWaitPeriodTime,
 	})
 
 	if err != nil {
