@@ -30,6 +30,8 @@
   CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
   TokenPath = "/vault/config/assets/resp-init.json"
   SNI = "localhost"
+  AdditionalRetryAttempts = 10
+  RetryWaitPeriod = "1s"
 
 [Mongo]
   Host = 'localhost'
