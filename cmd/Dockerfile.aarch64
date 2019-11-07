@@ -30,17 +30,13 @@ MAINTAINER Diana Atanasova
 
 RUN \
     apt-get update && apt-get install -y --no-install-recommends wget libcurl3 php-curl && rm -rf /var/lib/apt/lists/* && \
-    addgroup mongodb && \
-    adduser --system --ingroup mongodb mongodb && \
     wget http://fastdl.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
     tar xf mongodb-linux-arm64-ubuntu1604-4.0.10.tgz && \
     mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongod /usr/local/bin && \
     mv mongodb-linux-aarch64-ubuntu1604-4.0.10/bin/mongo /usr/local/bin && \
     rm -rf mongo mongodb-linux-arm64-ubuntu1604-4.0.10.tgz mongodb-linux-aarch64-ubuntu1604-4.0.10 && \
-    mkdir /data && mkdir /data/db && \
-    chown mongodb:mongodb /data/db
+    mkdir /data && mkdir /data/db
 
-USER mongodb
 #expose Mongodb's port
 EXPOSE 27017
 
