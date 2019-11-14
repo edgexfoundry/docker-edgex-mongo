@@ -37,6 +37,8 @@ FROM mongo:4.2.0-bionic
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2019: VMWare'
 
+RUN apt update && apt install curl
+
 EXPOSE 27017
 WORKDIR /edgex-mongo
 COPY --from=builder /edgex-mongo/cmd/edgex-mongo /edgex-mongo/cmd/
