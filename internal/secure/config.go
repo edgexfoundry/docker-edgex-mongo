@@ -49,13 +49,15 @@ func LoadConfig() (*pkg.Configuration, error) {
 	}
 
 	secretClient, err := secrets.NewSecretClient(secrets.SecretConfig{
-		Port:           secureConfig.SecretStore.Port,
-		Host:           secureConfig.SecretStore.Server,
-		Path:           secureConfig.SecretStore.Path,
-		Protocol:       "https",
-		RootCaCertPath: secureConfig.SecretStore.CACertPath,
-		ServerName:     secureConfig.SecretStore.SNI,
-		Authentication: secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
+		Port:                    secureConfig.SecretStore.Port,
+		Host:                    secureConfig.SecretStore.Server,
+		Path:                    secureConfig.SecretStore.Path,
+		Protocol:                "https",
+		RootCaCertPath:          secureConfig.SecretStore.CACertPath,
+		ServerName:              secureConfig.SecretStore.SNI,
+		Authentication:          secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
+		AdditionalRetryAttempts: secureConfig.SecretStore.AdditionalRetryAttempts,
+		RetryWaitPeriod:         secureConfig.SecretStore.RetryWaitPeriod,
 	})
 
 	if err != nil {
@@ -66,7 +68,7 @@ func LoadConfig() (*pkg.Configuration, error) {
 	var credentials = make(map[string]pkg.DatabaseInfo)
 	for _, dbName := range getDatabaseNames(secureConfig) {
 		pkg.LoggingClient.Debug(fmt.Sprintf("reading secrets from '%s/%s' path", secureConfig.SecretStore.Path, dbName))
-		secrets, err := secretClient.GetSecrets("/"+dbName,"username", "password")
+		secrets, err := secretClient.GetSecrets("/"+dbName, "username", "password")
 		if err != nil {
 			pkg.LoggingClient.Error(fmt.Sprintf("failed to read secret stores data for '%s/%s' path: %s", secureConfig.SecretStore.Path, dbName, err.Error()))
 			return nil, err
