@@ -27,7 +27,7 @@
   Server = "edgex-vault"
   Port = 8200
   Path = "/v1/secret/edgex/mongo"
-  CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
+  CACertPath = "/tmp/edgex/secrets/ca/ca.pem"
   TokenPath = "/vault/config/assets/resp-init.json"
   SNI = "edgex-vault"
   AdditionalRetryAttempts = 10
