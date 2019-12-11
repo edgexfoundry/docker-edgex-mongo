@@ -12,11 +12,10 @@ var DatabaseCollectionsMap = map[string]func(db *mgo.Database){
 	"authorization":       nil,
 	"metadata":            createMetadataCollections,
 	"coredata":            createCoredataCollections,
-	"rulesengine":     nil,
+	"rulesengine":         nil,
 	"notifications":       createNotificationCollections,
 	"scheduler":           createSchedulerCollections,
 	"logging":             createLoggingCollections,
-	"exportclient":        createExportClientCollections,
 	"application-service": createApplicationServiceCollections,
 }
 

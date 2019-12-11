@@ -147,18 +147,6 @@ func createLoggingCollections(db *mgo.Database) {
 	}
 }
 
-func createExportClientCollections(db *mgo.Database) {
-	logEntry := mgo.Collection{
-		Database: db,
-		Name:     "exportConfiguration",
-		FullName: "db.exportConfiguration",
-	}
-	err := logEntry.Create(&mgo.CollectionInfo{})
-	if err != nil {
-		pkg.LoggingClient.Error("Error during execution: " + err.Error())
-	}
-}
-
 func createApplicationServiceCollections(db *mgo.Database) {
 	logEntry := mgo.Collection{
 		Database: db,

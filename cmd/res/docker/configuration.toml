@@ -63,9 +63,6 @@
     [Databases.logging]
        Username = "logging"
        Password = "password"
-    [Databases.exportclient]
-       Username = "exportclient"
-       Password = "password"
     [Databases.application-service]
        Username = "appservice"
        Password = "password"
