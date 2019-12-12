@@ -39,18 +39,18 @@ func LoadConfig() (*pkg.Configuration, error) {
 		return nil, err
 	}
 
-	token, err := getAccessToken(secureConfig.SecretStore.TokenPath)
+	token, err := getAccessToken(secureConfig.SecretStore.TokenFile)
 	if err != nil {
 		return nil, err
 	}
 
 	secretClient, err := secrets.NewSecretClient(secrets.SecretConfig{
 		Port:                    secureConfig.SecretStore.Port,
-		Host:                    secureConfig.SecretStore.Server,
+		Host:                    secureConfig.SecretStore.Host,
 		Path:                    secureConfig.SecretStore.Path,
 		Protocol:                "https",
-		RootCaCertPath:          secureConfig.SecretStore.CACertPath,
-		ServerName:              secureConfig.SecretStore.SNI,
+		RootCaCertPath:          secureConfig.SecretStore.RootCaCertPath,
+		ServerName:              secureConfig.SecretStore.ServerName,
 		Authentication:          secrets.AuthenticationInfo{AuthType: pkg.VaultToken, AuthToken: token},
 		AdditionalRetryAttempts: secureConfig.SecretStore.AdditionalRetryAttempts,
 		RetryWaitPeriod:         secureConfig.SecretStore.RetryWaitPeriod,

@@ -24,12 +24,12 @@
   BootTimeout = 30000
 
 [SecretStore]
-  Server = "localhost"
+  Host = "localhost"
   Port = 8200
   Path = "/v1/secret/edgex/mongo"
-  CACertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
-  TokenPath = "/vault/config/assets/resp-init.json"
-  SNI = "localhost"
+  RootCaCertPath = "/vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem"
+  TokenFile = "/vault/config/assets/resp-init.json"
+  ServerName = "localhost"
   AdditionalRetryAttempts = 10
   RetryWaitPeriod = "1s"
 

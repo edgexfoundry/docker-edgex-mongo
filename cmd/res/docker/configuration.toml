@@ -24,12 +24,12 @@
   BootTimeout = 30000
 
 [SecretStore]
-  Server = "edgex-vault"
+  Host = "edgex-vault"
   Port = 8200
   Path = "/v1/secret/edgex/mongo"
-  CACertPath = "/tmp/edgex/secrets/ca/ca.pem"
-  TokenPath = "/tmp/edgex/secrets/edgex-mongo/secrets-token.json"
-  SNI = "edgex-vault"
+  RootCaCertPath = "/tmp/edgex/secrets/ca/ca.pem"
+  TokenFile = "/tmp/edgex/secrets/edgex-mongo/secrets-token.json"
+  ServerName = "edgex-vault"
   AdditionalRetryAttempts = 10
   RetryWaitPeriod = "1s"
 
