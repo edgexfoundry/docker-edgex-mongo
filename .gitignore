@@ -2,5 +2,6 @@
 vendor
 .project
 .vscode/
+VERSION
 
 cmd/edgex-mongo

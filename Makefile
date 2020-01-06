@@ -25,7 +25,7 @@ MICROSERVICES=cmd/edgex-mongo
 
 GO=CGO_ENABLED=0 GO111MODULE=on go
 
-VERSION=$(shell cat ./VERSION)
+VERSION=$(shell cat ./VERSION 2>/dev/null || echo 0.0.0)
 DOCKER_TAG=$(VERSION)
 
 GOFLAGS=-ldflags "-X github.com/edgexfoundry/docker-edgex-mongo.Version=$(VERSION)"
