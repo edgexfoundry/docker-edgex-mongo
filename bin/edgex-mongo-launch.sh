@@ -9,14 +9,21 @@
 set -e
 
 ###
-# Run MongoDB
+# Run MongoDB bind to localhost.
 ###
-mongod --bind_ip_all &
+mongod &
 
 ###
-# Run Edgex-Mongo Go Application and keep the process/container alive
+# Run Edgex-Mongo Go Application and initiate the database
 ###
 cd cmd/
 ./edgex-mongo --profile=docker --confdir=res
+
+
+###
+# Restart Edgex-Mongo with enabled authentication and bind_ip_all
+###
+mongod --shutdown
+mongod --auth --bind_ip_all &
 wait
 
