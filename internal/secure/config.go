@@ -15,23 +15,19 @@
 package secure
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 
 	"github.com/BurntSushi/toml"
 
 	"github.com/edgexfoundry/docker-edgex-mongo/internal/pkg"
 	secrets "github.com/edgexfoundry/go-mod-secrets/pkg/providers/vault"
+	"github.com/edgexfoundry/go-mod-secrets/pkg/token/authtokenloader"
+	"github.com/edgexfoundry/go-mod-secrets/pkg/token/fileioperformer"
 )
 
 type secureConfiguration struct {
 	pkg.Configuration
 	SecretStore pkg.SecretStoreInfo
-}
-
-type auth struct {
-	Token string `json:"root_token"`
 }
 
 func LoadConfig() (*pkg.Configuration, error) {
@@ -92,12 +88,12 @@ func getDatabaseNames(secureConfig secureConfiguration) []string {
 }
 
 func getAccessToken(filename string) (string, error) {
-	a := auth{}
-	raw, err := ioutil.ReadFile(filename)
+	fileOpener := fileioperformer.NewDefaultFileIoPerformer()
+	tokenLoader := authtokenloader.NewAuthTokenLoader(fileOpener)
+	token, err := tokenLoader.Load(filename)
 	if err != nil {
-		return a.Token, err
+		return "", err
 	}
 
-	err = json.Unmarshal(raw, &a)
-	return a.Token, err
+	return token, nil
 }
