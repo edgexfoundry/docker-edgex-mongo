@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/dumb-init /bin/bash
 #
 # Copyright (c) 2019 VMWare
 #
