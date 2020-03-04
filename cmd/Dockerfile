@@ -32,7 +32,7 @@ COPY . .
 
 RUN make cmd/edgex-mongo
 
-FROM mongo:4.2.0-bionic
+FROM mongo:4.2.3-bionic
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2019: VMWare'
