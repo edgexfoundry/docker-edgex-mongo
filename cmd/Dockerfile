@@ -16,7 +16,7 @@
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
 
-FROM golang:1.12-alpine3.9 AS builder
+FROM golang:1.13-alpine AS builder
 
 ENV GO111MODULE=on
 WORKDIR /edgex-mongo
@@ -37,7 +37,8 @@ FROM mongo:4.2.3-bionic
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2019: VMWare'
 
-RUN apt update && apt install curl
+RUN apt update && apt install curl dumb-init \
+ && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 27017
 WORKDIR /edgex-mongo

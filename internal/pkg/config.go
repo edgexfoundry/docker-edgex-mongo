@@ -16,6 +16,7 @@ package pkg
 
 import (
 	"fmt"
+	"github.com/edgexfoundry/go-mod-secrets/pkg/providers/vault"
 	"net/url"
 )
 
@@ -53,21 +54,15 @@ type WritableInfo struct {
 }
 
 type SecretStoreInfo struct {
-	Server     string
-	Port       int
-	TokenPath  string
-	CACertPath string
-	Path       string
-	// SNI - Server Name Identifier
-	SNI                     string
-	AdditionalRetryAttempts int
-	RetryWaitPeriod         string
+	vault.SecretConfig
+	// TokenFile provides a location to a token file.
+	TokenFile string
 }
 
 func (s SecretStoreInfo) GetSecretStoreBaseURL() string {
 	url := &url.URL{
 		Scheme: "https",
-		Host:   fmt.Sprintf("%s:%v", s.Server, s.Port),
+		Host:   fmt.Sprintf("%s:%v", s.Host, s.Port),
 	}
 	return url.String()
 }
