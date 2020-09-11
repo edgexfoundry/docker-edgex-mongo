@@ -16,7 +16,7 @@
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
 
-FROM golang:1.13-alpine AS builder
+FROM golang:1.15-alpine AS builder
 
 ENV GO111MODULE=on
 WORKDIR /edgex-mongo
