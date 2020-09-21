@@ -16,7 +16,9 @@
 ###############################################################################
 # Mongo DB image for EdgeX Foundry
 
-FROM golang:1.13-alpine AS builder
+# Docker image for Golang Core Data micro service
+ARG BUILDER_BASE=golang:1.15-alpine
+FROM ${BUILDER_BASE} AS builder
 
 ENV GO111MODULE=on
 WORKDIR /edgex-mongo
@@ -32,7 +34,7 @@ COPY . .
 
 RUN make cmd/edgex-mongo
 
-FROM mongo:4.2.3-bionic
+FROM mongo:4.4.1-bionic
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2019: VMWare'
