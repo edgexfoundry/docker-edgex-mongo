@@ -5,3 +5,5 @@ vendor
 VERSION
 
 cmd/edgex-mongo
+
+go.sum
